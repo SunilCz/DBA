@@ -1,0 +1,38 @@
+LAb1
+
+CONNECT sys as sysdba;
+
+CREATE USER c##noob IDENTIFIED BY "ADMIN"
+        CONTAINER = ALL;
+GRANT CONNECT, RESOURCE, CREATE SESSION TO c##noob CONTAINER = ALL;
+
+CONNECT c##noob/"ADMIN";
+
+
+Lab2
+
+
+CONNECT c##noob/"ADMIN";
+
+CREATE TABLE student (
+    student_id INT PRIMARY KEY,
+    name VARCHAR2(50),
+    age INT,
+    grade VARCHAR2(2),
+    CONSTRAINT chk_grade CHECK (grade IN ('A', 'B', 'C', 'D')),
+    CONSTRAINT chk_age CHECK (age >= 18)
+);
+
+//-- Connect to the database as a user with appropriate privileges (e.g., SYS)
+CONNECT sys as sysdba;
+
+-- Grant quota to the user 'c##noob' on the 'USERS' tablespace
+ALTER USER c##noob QUOTA UNLIMITED ON USERS;
+//
+
+INSERT INTO student (student_id, name, age, grade) VALUES (1, 'John', 20, 'A');
+INSERT INTO student (student_id, name, age, grade) VALUES (2, 'Jane', 19, 'B');
+
+SELECT * FROM student;
+
+DELETE FROM student WHERE student_id = 2;

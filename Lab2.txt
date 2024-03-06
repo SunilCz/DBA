@@ -1,0 +1,41 @@
+LAb1
+
+CONNECT sys as sysdba;
+
+
+CREATE USER c##studentpdb IDENTIFIED BY "ADMIN";
+
+CONNECT c##studentpdb/"ADMIN";
+
+//-- Connect as a privileged user (e.g., SYS)
+CONNECT sys as sysdba;
+
+-- Grant the CREATE SESSION privilege to the user "C##STUDENTPDB"
+GRANT CREATE SESSION TO C##STUDENTPDB;
+//
+
+Lab2
+
+
+-- Step 1: Log in to PDB as the "studentpdb" user
+CONNECT studentpdb/your_password;
+
+-- Step 2: Create the table "employee" with necessary columns and constraints
+CREATE TABLE employee (
+    employee_id INT PRIMARY KEY,
+    name VARCHAR2(50),
+    department VARCHAR2(50),
+    salary NUMBER(10, 2),
+    CONSTRAINT chk_salary CHECK (salary >= 0)
+);
+
+-- Step 3: Create a synonym for the "employee" table
+CREATE SYNONYM emp_synonym FOR employee;
+
+-- Step 4: Use the synonym to display information from the "employee" table
+-- Insert some sample data
+INSERT INTO employee (employee_id, name, department, salary) VALUES (1, 'John', 'IT', 5000);
+INSERT INTO employee (employee_id, name, department, salary) VALUES (2, 'Jane', 'HR', 6000);
+
+-- Display information using the synonym
+SELECT * FROM emp_synonym;
